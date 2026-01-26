@@ -1,4 +1,4 @@
-# FormAi 🧬
+# FormAi 
 
 **The Digital Twin of an Elite Sports Coach.**
 *Powered by Gemini 3 Pro & Flash.*
