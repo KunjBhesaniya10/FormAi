@@ -1,0 +1,36 @@
+{
+    "sport_id": "cricket",
+    "name": "Cricket",
+    "theme_color": "#1976D2",
+    "icon_asset": "assets/icons/cricket.png",
+    "skills": [
+        "Cover Drive",
+        "Pull Shot",
+        "Defensive Block",
+        "Outswinger Bowling",
+        "Yorker Bowling"
+    ],
+    "attributes": {
+        "timing": "Batting Timing",
+        "power": "Shot Power",
+        "line_length": "Bowling Accuracy"
+    },
+    "equipment_schema": {
+        "bat_brand": {
+            "type": "string",
+            "label": "Bat Brand"
+        },
+        "role": {
+            "type": "enum",
+            "options": [
+                "Batsman",
+                "Bowler",
+                "All-Rounder"
+            ],
+            "label": "Primary Role"
+        }
+    },
+    "default_prompts": {
+        "focus_area": "Watch the ball until it hits the bat."
+    }
+}

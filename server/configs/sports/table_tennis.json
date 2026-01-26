@@ -1,0 +1,26 @@
+{
+  "sport_id": "table_tennis",
+  "name": "Table Tennis",
+  "theme_color": "#FFC107",
+  "icon_asset": "assets/icons/table_tennis.png",
+  "skills": [
+    "Forehand Drive",
+    "Backhand Push",
+    "Forehand Topspin",
+    "Backhand Block",
+    "Service Pendulum"
+  ],
+  "attributes": {
+    "speed": "Speed & Reaction",
+    "spin": "Spin Generation",
+    "footwork": "Footwork Precision"
+  },
+  "equipment_schema": {
+    "blade": {"type": "string", "label": "Blade Model"},
+    "rubber_forehand": {"type": "string", "label": "Forehand Rubber"},
+    "rubber_backhand": {"type": "string", "label": "Backhand Rubber"}
+  },
+  "default_prompts": {
+    "focus_area": "Keep eye on the ball contact point."
+  }
+}
