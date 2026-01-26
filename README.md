@@ -1,91 +1,69 @@
-# FormAi 🧬🏏🏓
+# FormAi 🧬
 
-**FormAi** is a premium, AI-powered sports coaching ecosystem that leverages the massive context window and reasoning capabilities of **Gemini 3 Pro** to democratize elite-level athletic training.
-
----
-
-## 🌟 The Vision: Your 24/7 Professional Coaching Staff
-Elite coaching is expensive, geographically limited, and inconsistent. **FormAi** solves this by providing every athlete with a "Digital Twin" of a world-class coach. 
-
-Unlike traditional fitness apps that offer static routines, FormAi **sees, hears, and reasons** about your performance. It doesn't just count reps; it analyzes the kinetic chain of a Table Tennis loop or the weight distribution in a Cricket cover drive.
+**The Digital Twin of an Elite Sports Coach.**
+*Powered by Gemini 3 Pro & Flash.*
 
 ---
 
-## 🔬 The "Long Context" Advantage (Powered by Gemini 3 Pro)
-
-The core innovation of FormAi lies in utilizing Gemini 3 Pro's **2-Million+ Token Context Window**. This allows the app to move beyond "single-session" analysis into **Longitudinal Athlete Evolution**:
-
-- **Multi-Session Memory**: Gemini can process and compare *months* of training footage in a single reasoning pass. It remembers how your elbow was tucked 3 weeks ago and compares it to your current session to measure the exact delta of improvement.
-- **Dynamic Mastery Plans**: By analyzing hours of footage, FormAi identifies "Root Cause" flaws rather than symptoms. It then generates **4-Week Action Plans** that adapt based on the progress it sees in your daily video uploads.
-- **Holistic Reasoning**: The AI relates biomechanical data with equipment performance. If your wrist speed has increased over 10 sessions, it will proactively suggest a stiffer bat or a heavier racket to complement your maturing power profile.
+**FormAi** is a premium sports coaching ecosystem designed to democratize elite athletic training. By leveraging the **2-Million+ Token Context Window** of Gemini 3 Pro, FormAi doesn't just see a single practice session—it remembers your entire athletic history, reasoning about your biomechanics and growth just like a human pro coach.
 
 ---
 
-## 🚀 Key Features
+## 🚀 Core Capabilities
 
-- **Gemini 3 Pro Deep Analyst**: High-fidelity spatio-temporal reasoning for deep session reviews.
-- **Gemini 3 Flash Live Coach**: Snappy, real-time audio and visual corrections during active play.
-- **Bento Grid Dashboard**: A premium, "control center" aesthetic showing longitudinal growth metrics and active training streaks.
-- **Pro-Grade Equipment Advisory**: Context-aware gear suggestions that evolve as your skill level increases.
-- **Dynamic Multi-Sport Engine**: Unified architecture supporting various biomechanical models (Table Tennis, Cricket, and more).
+FormAi is built on three pillars of intelligence, providing a feedback loop that covers immediate correction, deep analysis, and long-term evolution.
+
+### 1. 🧬 Deep Biomechanical Analyst (Gemini 3 Pro)
+Go beyond simple rep counting. Our **Deep Analyst** engine processes practice footage to understand the kinetic chain of your movement.
+* **Spatio-Temporal Reasoning:** Identifies complex flaws like "late hip rotation" in a tennis forehand or "insufficient backlift" in cricket.
+* **Root Cause Detection:** Detects not just *what* went wrong, but *why* (e.g., "Your weak wrist position is causing the ball to drift").
+
+### 2. ⚡ Live Audio Coach (Gemini 3 Flash)
+Instant feedback when you need it most—during the drill.
+* **Real-Time Correction:** Using low-latency Gemini 3 Flash, the app "watches" your live stream and provides immediate audio cues (e.g., *"Stay lower!"*, *"Faster recovery!"*).
+* **Hands-Free Interaction:** Fully voice-controlled, allowing athletes to ask questions to their digital coach without stopping their practice.
+
+### 3. 🧠 Longitudinal Memory Engine
+The true power of FormAi lies in its ability to **remember**.
+* **Multi-Session Context:** The AI compares today's session against footage from weeks or months ago to measure precise improvements.
+* **Adaptive Training Plans:** Generates dynamic 4-week evolution plans that shift automatically based on your daily performance data.
+* **Smart Equipment Advisory:** *Bonus:* Intelligently suggests gear upgrades (e.g., stiffer racket rubbers) as it detects your skill level and power increasing over time.
+
+### 4. 🧩 Dynamic Multi-Sport Architecture
+A modular system designed to scale.
+* **Context-Switching Personas:** The app instantly reconfigures its entire "Brain" (System Prompts, Vision Models, and UI Themes) when you switch sports.
+* **Specialized Metrics:** Tracks "Spin Rate" for Table Tennis vs. "Bat Speed" for Cricket, ensuring the advice is always domain-specific and grounded in expert rulebooks.
 
 ---
 
-## 🛠️ Technology Stack
+## 🛠️ Tech Stack
 
-- **Frontend**: React Native (Expo SDK 54), Lucide Icons, React Navigation.
-- **Backend**: FastAPI (Python 3.12).
-- **AI Reasoning Engine**: Gemini 3 Pro & Gemini 3 Flash.
-- **Data Pipeline**: Secure video handshake & dynamic system prompts for biomechanical analysis.
+**Client-Side (Mobile)**
+* **Framework:** React Native (Expo SDK)
+* **UI/UX:** Lucide Icons, Bento Grid Layouts, React Navigation
+* **Features:** Real-time Camera Stream, Interactive Dashboards
+
+**Server-Side (The Brain)**
+* **Runtime:** Python 3.12+
+* **API Framework:** FastAPI
+* **AI Engine:** Google Gemini 3 Pro (Reasoning) & Flash (Real-time)
+* **Architecture:** Modular "Sport-Schema" System
 
 ---
 
-## 📦 Project Structure
+## 📂 Project Structure
 
 ```text
 FormAi/
-├── client/          # React Native (Expo) Mobile Application
+├── client/                 # React Native Mobile Application
 │   ├── src/
-│   │   ├── context/ # State management (Session & Dynamic Backend URL)
-│   │   └── screens/ # Premium UI screens (Bento Dashboard, AI Camera, Profile)
-│   └── App.js       # Navigation & Session Provider
-└── server/          # FastAPI Backend (The Reasoning Engine)
-    ├── configs/     # Sport-specific Biomechanical JSON models
-    ├── routers/     # API Endpoints (Deep Analysis, Onboarding, Discovery)
-    └── main.py      # Entry point
-```
-
----
-
-## ⚙️ Setup Instructions
-
-### 1. Prerequisites
-- Node.js (v18+) & Python 3.12+
-- Gemini API Key with access to Google's latest reasoning models.
-
-### 2. Backend Setup
-```bash
-cd server
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-export GEMINI_API_KEY="your_api_key_here"
-uvicorn main:app --host 0.0.0.0 --port 8000 --reload
-```
-
-### 3. Frontend Setup
-```bash
-cd client
-npm install
-npm start
-```
-
----
-
-## 📱 Mobile Testing
-The app is optimized for **Expo Go**. Ensure your device is on the same local network as the server for real-time video streaming and AI handshake.
-
----
-
-## 🛡️ License
-MIT License. Created for the future of sports.
+│   │   ├── context/        # Session State & Dynamic Configs
+│   │   ├── screens/        # Dashboard, AI Camera, Analysis UI
+│   │   └── components/     # Reusable Bento Grid & Charts
+│   └── App.js              # Entry Point & Navigation
+│
+└── server/                 # FastAPI Reasoning Engine
+    ├── configs/            # Sport-Specific Biomechanical Models (JSON)
+    ├── routers/            # API Endpoints (Analysis, Streaming)
+    ├── utils/              # Gemini Prompts & Context Handlers
+    └── main.py             # Server Entry Point
