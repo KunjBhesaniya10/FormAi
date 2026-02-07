@@ -6,6 +6,7 @@ import json
 import asyncio
 import time
 from typing import List
+from database.client import supabase
 
 router = APIRouter(prefix="/session", tags=["Session"])
 
@@ -33,14 +34,31 @@ async def analyze_deep(
     file_path = f"{temp_dir}/{file.filename}"
     
     with open(file_path, "wb+") as f:
-        f.write(await file.read())
+        file_content = await file.read()
+        f.write(file_content)
 
+    video_url = None
     try:
-        # 2. Upload to Gemini File API
+        # 2. Upload to Supabase Storage
+        # Ensure unique filename
+        timestamp = int(time.time())
+        storage_path = f"{user_id}/{timestamp}_{file.filename}"
+        
+        with open(file_path, 'rb') as f:
+             # 'videos' is the bucket name. make sure it exists.
+            try:
+                supabase.storage.from_("videos").upload(file=f, path=storage_path, file_options={"content-type": file.content_type})
+                video_url = supabase.storage.from_("videos").get_public_url(storage_path)
+            except Exception as e:
+                print(f"Storage Upload Failed: {e}")
+                # We continue even if storage fails, just to show analysis
+                video_url = "https://placeholder.com/video_failed_upload"
+
+        # 3. Upload to Gemini File API
         print(f"Uploading {file.filename} to Gemini...")
         genai_file = await asyncio.to_thread(genai.upload_file, path=file_path)
         
-        # 3. Wait for file to be processed
+        # 4. Wait for file to be processed
         while genai_file.state.name == "PROCESSING":
             print("Gemini is processing the video...")
             await asyncio.sleep(2)
@@ -49,8 +67,8 @@ async def analyze_deep(
         if genai_file.state.name == "FAILED":
             raise HTTPException(status_code=500, detail="Gemini video processing failed")
 
-        # 4. Analyze with Gemini 3 Pro (The Next-Gen Reasoning Engine)
-        model = genai.GenerativeModel('gemini-3-pro') 
+        # 5. Analyze with Gemini 3 Pro (The Next-Gen Reasoning Engine)
+        model = genai.GenerativeModel('gemini-2.0-flash-lite-preview-02-05') 
         
         prompt = f"""
         You are a world-class {sport_id} biomechanics analyst. 
@@ -79,15 +97,32 @@ async def analyze_deep(
             json_text = response.text.strip().replace('```json', '').replace('```', '')
             analysis_result = json.loads(json_text)
         except:
+             # Fallback if Gemini returns malformed JSON
+            print("Failed to parse Gemini JSON, using fallback.")
             analysis_result = {
-                "technical_score": 7.0,
-                "summary": "Good effort! Work on your weight transfer.",
-                "detailed_flaws": ["Inconsistent elbow height", "Late footwork transition"],
-                "equipment_advice": "Consider a stiffer frame for better control during high-impact shots."
+                "technical_score": 0.0,
+                "summary": "Could not parse analysis.",
+                "detailed_flaws": ["Analysis error"],
+                "equipment_advice": "N/A"
             }
 
-        # Cleanup
-        os.remove(file_path)
+        # 6. Save Session to DB
+        try:
+            session_data = {
+                "user_id": user_id,
+                "sport_id": sport_id,
+                "video_url": video_url,
+                "duration_seconds": 0, # Could extract this
+                "analysis_json": analysis_result,
+                "coach_audio_script": analysis_result.get("summary", "")
+            }
+            supabase.table("sessions").insert(session_data).execute()
+        except Exception as e:
+            print(f"DB Insert Failed: {e}") 
+
+        # Cleanup Local
+        if os.path.exists(file_path):
+            os.remove(file_path)
         
         return analysis_result
 

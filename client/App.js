@@ -8,6 +8,7 @@ import CameraScreen from './src/screens/CameraScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import SettingsScreen from './src/screens/SettingsScreen';
 import DashboardScreen from './src/screens/DashboardScreen';
+import LoginScreen from './src/screens/LoginScreen';
 import { View, Text, ActivityIndicator, StyleSheet, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { Settings, Play, BarChart2, Home, User } from 'lucide-react-native';
 
@@ -42,7 +43,7 @@ function MainTabs() {
 }
 
 function Navigation() {
-    const { currentSportId, loading } = useSession();
+    const { currentSportId, loading, userId } = useSession();
 
     if (loading) {
         return (
@@ -52,10 +53,14 @@ function Navigation() {
         );
     }
 
+    // Auth Flow
+
     return (
         <NavigationContainer>
             <Stack.Navigator screenOptions={{ headerShown: false }}>
-                {!currentSportId ? (
+                {!userId ? (
+                    <Stack.Screen name="Login" component={LoginScreen} />
+                ) : !currentSportId ? (
                     <Stack.Screen name="Onboarding" component={OnboardingScreen} />
                 ) : (
                     <>

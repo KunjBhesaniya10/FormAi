@@ -7,7 +7,7 @@ import { StatusBar } from 'expo-status-bar';
 const { width } = Dimensions.get('window');
 
 export default function Dashboard({ navigation }) {
-    const { sportConfig } = useSession();
+    const { sportConfig, userStats, userData } = useSession();
     const themeColor = sportConfig?.theme_color || '#FFC107';
 
     const BentoCard = ({ children, style, height = 160 }) => (
@@ -15,6 +15,12 @@ export default function Dashboard({ navigation }) {
             {children}
         </View>
     );
+
+    // Dynamic Date
+    const today = new Date().toLocaleDateString('en-US', { weekday: 'long', day: 'numeric', month: 'short' }).toUpperCase();
+    // Dynamic Greeting
+    const hour = new Date().getHours();
+    const greeting = hour < 12 ? "Good Morning" : hour < 18 ? "Good Afternoon" : "Good Evening";
 
     return (
         <SafeAreaView style={styles.container}>
@@ -24,12 +30,14 @@ export default function Dashboard({ navigation }) {
                 {/* Header Section */}
                 <View style={styles.header}>
                     <View>
-                        <Text style={styles.date}>MONDAY, 12 OCT</Text>
-                        <Text style={styles.greeting}>Good Evening, Athlete</Text>
+                        <Text style={styles.date}>{today}</Text>
+                        <Text style={styles.greeting}>{greeting}, {userData?.full_name?.split(' ')[0] || "Athlete"}</Text>
                     </View>
                     <TouchableOpacity onPress={() => navigation.navigate('Profile')}>
                         <View style={[styles.avatar, { borderColor: themeColor }]}>
-                            <Text style={{ color: '#fff', fontWeight: 'bold' }}>JD</Text>
+                            <Text style={{ color: '#fff', fontWeight: 'bold' }}>
+                                {(userData?.username || "JD").substring(0, 2).toUpperCase()}
+                            </Text>
                         </View>
                     </TouchableOpacity>
                 </View>
@@ -62,7 +70,7 @@ export default function Dashboard({ navigation }) {
                                 <Text style={styles.cardLabel}>SKILL LEVEL</Text>
                             </View>
                             <View style={styles.bigStat}>
-                                <Text style={styles.statNum}>7.5</Text>
+                                <Text style={styles.statNum}>{userStats?.avg_score || "0.0"}</Text>
                                 <Text style={styles.statSub}>/ 10</Text>
                             </View>
                             <Text style={styles.statDesc}>Top 4% of players in your region</Text>

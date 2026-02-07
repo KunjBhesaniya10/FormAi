@@ -4,7 +4,7 @@ import { useSession } from '../context/SessionContext';
 import { Award, Target, Zap } from 'lucide-react-native';
 
 export default function ProfileScreen() {
-    const { sportConfig } = useSession();
+    const { sportConfig, userStats, userData } = useSession();
     const themeColor = sportConfig?.theme_color || '#FFC107';
 
     const StatBox = ({ icon: Icon, label, value }) => (
@@ -20,23 +20,25 @@ export default function ProfileScreen() {
             <View style={styles.content}>
                 <View style={styles.profileHeader}>
                     <View style={[styles.avatar, { borderColor: themeColor }]}>
-                        <Text style={styles.avatarText}>JD</Text>
+                        <Text style={styles.avatarText}>
+                            {(userData?.username || "U").substring(0, 2).toUpperCase()}
+                        </Text>
                     </View>
-                    <Text style={styles.name}>John Doe</Text>
-                    <Text style={styles.level}>{sportConfig?.name} Athlete • Rank #42</Text>
+                    <Text style={styles.name}>{userData?.full_name || "User"}</Text>
+                    <Text style={styles.level}>{sportConfig?.name} Athlete • {userStats?.tier || "Beginner"}</Text>
                 </View>
 
                 <View style={styles.statsRow}>
-                    <StatBox icon={Zap} value={sportConfig?.sport_id === 'cricket' ? "450" : "1.2k"} label="Points" />
-                    <StatBox icon={Award} value="82%" label="Accuracy" />
-                    <StatBox icon={Target} value={sportConfig?.sport_id === 'cricket' ? "Gold" : "Silver"} label="Tier" />
+                    <StatBox icon={Zap} value={userStats?.points || 0} label="Points" />
+                    <StatBox icon={Award} value={userStats?.accuracy || "0%"} label="Accuracy" />
+                    <StatBox icon={Target} value={userStats?.tier || "Beginner"} label="Tier" />
                 </View>
 
                 <View style={styles.gearSection}>
                     <Text style={styles.sectionTitle}>Equipments</Text>
                     <View style={styles.gearCard}>
                         <Text style={styles.gearText}>Primary Bat: Gray-Nicolls Legend</Text>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => alert('Gear improvement suggestions coming soon!')}>
                             <Text style={[styles.upgradeText, { color: themeColor }]}>Check Upgrade</Text>
                         </TouchableOpacity>
                     </View>

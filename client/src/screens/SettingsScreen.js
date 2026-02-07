@@ -4,11 +4,14 @@ import { useSession } from '../context/SessionContext';
 import { ChevronRight, User, Bell, Shield, HelpCircle, LogOut } from 'lucide-react-native';
 
 export default function SettingsScreen({ navigation }) {
-    const { sportConfig, switchSport } = useSession();
+    const { sportConfig, switchSport, logout } = useSession();
     const themeColor = sportConfig?.theme_color || '#FFC107';
 
     const SettingItem = ({ icon: Icon, title, subtitle }) => (
-        <TouchableOpacity style={styles.item}>
+        <TouchableOpacity
+            style={styles.item}
+            onPress={() => alert(`${title} settings coming soon!`)}
+        >
             <View style={styles.itemLeft}>
                 <View style={styles.iconBox}>
                     <Icon color="#666" size={22} />
@@ -59,7 +62,7 @@ export default function SettingsScreen({ navigation }) {
                     <SettingItem icon={HelpCircle} title="Help Center" />
                 </View>
 
-                <TouchableOpacity style={styles.logoutButton}>
+                <TouchableOpacity style={styles.logoutButton} onPress={logout}>
                     <LogOut color="#ff4444" size={20} />
                     <Text style={styles.logoutText}>Log Out</Text>
                 </TouchableOpacity>
